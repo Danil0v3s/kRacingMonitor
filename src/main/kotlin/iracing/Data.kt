@@ -1,10 +1,10 @@
-package mahm
+package iracing
 
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Data(
     val header: Header,
-    val entries: List<Entry>,
-    val gpuEntries: List<GPUEntry>
+    val entries: List<String>,
+    val gpuEntries: List<String>
 )
