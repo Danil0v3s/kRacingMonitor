@@ -20,101 +20,61 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class DriverInfoYaml {
-
-
-    public String CarIdx = "";
-
-    public String UserName = "";
-
-    public String AbbrevName = "";
-
-    public String Initials = "";
-
-    public String UserID = "";
-
-    public String TeamID = "";
-
-    public String TeamName = "";
-
-    public String CarNumber = "";
-
-    public String CarNumberRaw = "";
-
-    public String CarPath = "";
-
-    public String CarClassID = "";
-
-    public String CarID = "";
-
-    public String CarIsPaceCar = "";
-
-    public String CarIsAI = "";
-
-    public String CarScreenName = "";
-
-    public String CarScreenNameShort = "";
-
-    public String CarClassShortName = "";
-
-    public String CarClassRelSpeed = "";
-
-    public String CarClassLicenseLevel = "";
-
-    public String CarClassMaxFuelPct = "";
-
-    public String CarClassWeightPenalty = "";
-
-    public String CarClassColor = "";
-
-    public String IRating = "";
-
-    public String LicLevel = "";
-
-    public String LicSubLevel = "";
-
-    public String LicString = "";
-
-    public String LicColor = "";
-
-    public String IsSpectator = "";
-
-    public String CarDesignStr = "";
-
-    public String HelmetDesignStr = "";
-
-    public String SuitDesignStr = "";
-
-    public String CarNumberDesignStr = "";
-
-    public String CarSponsor_1 = "";
-
-    public String CarSponsor_2 = "";
-
-    public String ClubName = "";
-
-    public String DivisionName = "";
-    public String CarIsElectric = "";
-    public String CarEngCylinderCount = "";
-    public String CarGearNumForward = "";
-    public String CarGearNeutral = "";
-    public String CarGearReverse = "";
-    public String CarVersion = "";
-    public String IncidentCount = "";
-    public String CarClassPowerAdjust = "";
-    public String CarClassDryTireSetLimit = "";
-    public String CarClassEstLapTime = "";
-    public String BodyType = "";
-    public String FaceType = "";
-    public String HelmetType = "";
-    public String CurDriverIncidentCount = "";
-    public String TeamIncidentCount = "";
-
-}
+data class DriverInfoYaml(
+    var CarIdx : String = "",
+    var UserName : String = "",
+    var AbbrevName : String? = null,
+    var Initials : String? = null,
+    var UserID : String = "",
+    var TeamID : String = "",
+    var TeamName : String = "",
+    var CarNumber : String = "",
+    var CarNumberRaw : String = "",
+    var CarPath : String = "",
+    var CarClassID : String = "",
+    var CarID : String = "",
+    var CarIsPaceCar : String = "",
+    var CarIsAI : String = "",
+    var CarScreenName : String = "",
+    var CarScreenNameShort : String = "",
+    var CarClassShortName : String? = null,
+    var CarClassRelSpeed : String = "",
+    var CarClassLicenseLevel : String = "",
+    var CarClassMaxFuelPct : String = "",
+    var CarClassWeightPenalty : String = "",
+    var CarClassColor : String = "",
+    var IRating : String = "",
+    var LicLevel : String = "",
+    var LicSubLevel : String = "",
+    var LicString : String = "",
+    var LicColor : String = "",
+    var IsSpectator : String = "",
+    var CarDesignStr : String = "",
+    var HelmetDesignStr : String = "",
+    var SuitDesignStr : String = "",
+    var CarNumberDesignStr : String = "",
+    var CarSponsor_1 : String = "",
+    var CarSponsor_2 : String = "",
+    var ClubName : String = "",
+    var DivisionName : String = "",
+    var CarIsElectric : String = "",
+    var CarEngCylinderCount : String = "",
+    var CarGearNumForward : String = "",
+    var CarGearNeutral : String = "",
+    var CarGearReverse : String = "",
+    var CarVersion : String = "",
+    var IncidentCount : String = "",
+    var CarClassPowerAdjust : String = "",
+    var CarClassDryTireSetLimit : String = "",
+    var CarClassEstLapTime : String = "",
+    var BodyType : String = "",
+    var FaceType : String = "",
+    var HelmetType : String = "",
+    var CurDriverIncidentCount : String = "",
+    var TeamIncidentCount : String = "",
+)

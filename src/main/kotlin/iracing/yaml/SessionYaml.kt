@@ -20,48 +20,29 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
-import java.util.List;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class SessionYaml {
-
-
-    public String SessionNum = "";
-
-    public String SessionLaps = "";
-
-    public String SessionTime = "";
-
-    public String SessionNumLapsToAvg = "";
-
-    public String SessionType = "";
-
-    public String SessionTrackRubberState = "";
-
-    public List<ResultsPositionsYaml> ResultsPositions;
-
-    public List<ResultsFastestLapYaml> ResultsFastestLap;
-
-    public String ResultsAverageLapTime = "";
-
-    public String ResultsNumCautionFlags = "";
-
-    public String ResultsNumCautionLaps = "";
-
-    public String ResultsNumLeadChanges = "";
-
-    public String ResultsLapsComplete = "";
-
-    public String ResultsOfficial = "";
-    public String SessionName = "";
-    public String SessionSubType = "";
-    public String SessionSkipped = "";
-    public String SessionRunGroupsUsed = "";
-    public String SessionEnforceTireCompoundChange = "";
-}
+data class SessionYaml(
+    var SessionNum: String = "",
+    var SessionLaps: String = "",
+    var SessionTime: String = "",
+    var SessionNumLapsToAvg: String = "",
+    var SessionType: String = "",
+    var SessionTrackRubberState: String = "",
+    var ResultsPositions: List<ResultsPositionsYaml>? = null,
+    var ResultsFastestLap: List<ResultsFastestLapYaml>? = null,
+    var ResultsAverageLapTime: String = "",
+    var ResultsNumCautionFlags: String = "",
+    var ResultsNumCautionLaps: String = "",
+    var ResultsNumLeadChanges: String = "",
+    var ResultsLapsComplete: String = "",
+    var ResultsOfficial: String = "",
+    var SessionName: String = "",
+    var SessionSubType: String? = null,
+    var SessionSkipped: String = "",
+    var SessionRunGroupsUsed: String = "",
+    var SessionEnforceTireCompoundChange: String = "",
+)

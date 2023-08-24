@@ -20,36 +20,21 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class RadioFrequenciesYaml {
-
-
-    public String FrequencyNum = "";
-
-    public String FrequencyName = "";
-
-    public String Priority = "";
-
-    public String CarIdx = "";
-
-    public String EntryIdx = "";
-
-    public String ClubID = "";
-
-    public String CanScan = "";
-
-    public String CanSquawk = "";
-
-    public String Muted = "";
-
-    public String IsMutable = "";
-
-    public String IsDeletable = "";
-
-}
+data class RadioFrequenciesYaml(
+    var FrequencyNum : String = "",
+    var FrequencyName : String = "",
+    var Priority : String = "",
+    var CarIdx : String = "",
+    var EntryIdx : String = "",
+    var ClubID : String = "",
+    var CanScan : String = "",
+    var CanSquawk : String = "",
+    var Muted : String = "",
+    var IsMutable : String = "",
+    var IsDeletable : String = "",
+)

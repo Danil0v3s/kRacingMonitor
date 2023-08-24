@@ -20,35 +20,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import kotlinx.serialization.Serializable;
-
+import com.fasterxml.jackson.annotation.JsonInclude
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class SessionInfoData {
+data class SessionInfoData(
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    var WeekendInfo: WeekendInfoYaml? = null,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public WeekendInfoYaml WeekendInfo;
+    var SessionInfo: SessionInfoYaml? = null,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public SessionInfoYaml SessionInfo;
+    var QualifyResultsInfo: QualifyResultsInfoYaml? = null,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public QualifyResultsInfoYaml QualifyResultsInfo;
+    var CameraInfo: CamerasInfoYaml? = null,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public CamerasInfoYaml CameraInfo;
+    var RadioInfo: RadiosInfoYaml? = null,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public RadiosInfoYaml RadioInfo;
+    var DriverInfo: DriversInfoYaml? = null,
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public DriversInfoYaml DriverInfo;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public SplitTimeInfoYaml SplitTimeInfo;
-
-}
+    var SplitTimeInfo: SplitTimeInfoYaml? = null,
+)

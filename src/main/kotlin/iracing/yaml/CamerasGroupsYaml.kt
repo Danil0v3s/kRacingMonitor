@@ -20,19 +20,14 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
-import java.util.List;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class CamerasGroupsYaml {
-
-    public String GroupNum = "";
-    public String GroupName = "";
-    public String IsScenic = "";
-    public List<CameraInfoYaml> Cameras;
-}
+data class CamerasGroupsYaml (
+    var GroupNum : String = "",
+    var GroupName : String = "",
+    var IsScenic : String = "",
+    var Cameras: List<CameraInfoYaml>? = null
+)

@@ -20,42 +20,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class ResultsPositionsYaml {
-
-
-    public String Position = "";
-
-    public String ClassPosition = "";
-
-    public String CarIdx = "";
-
-    public String Lap = "";
-
-    public String Time = "";
-
-    public String FastestLap = "";
-
-    public String FastestTime = "";
-
-    public String LastTime = "";
-
-    public String LapsLed = "";
-
-    public String LapsComplete = "";
-
-    public String LapsDriven = "";
-
-    public String Incidents = "";
-
-    public String ReasonOutId = "";
-
-    public String ReasonOutStr = "";
-
-}
+data class ResultsPositionsYaml(
+    var Position : String = "",
+    var ClassPosition : String = "",
+    var CarIdx : String = "",
+    var Lap : String = "",
+    var Time : String = "",
+    var FastestLap : String = "",
+    var FastestTime : String = "",
+    var LastTime : String = "",
+    var LapsLed : String = "",
+    var LapsComplete : String = "",
+    var LapsDriven : String = "",
+    var Incidents : String = "",
+    var ReasonOutId : String = "",
+    var ReasonOutStr : String = "",
+)

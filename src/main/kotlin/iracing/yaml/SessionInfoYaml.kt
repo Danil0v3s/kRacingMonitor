@@ -20,20 +20,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
-import java.util.List;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class SessionInfoYaml {
-
-
-    public String NumSession = "";
-
-    public List<SessionYaml> Sessions;
-
-}
+data class SessionInfoYaml(
+    var NumSession : String = "",
+    var Sessions: List<SessionYaml>? = null
+)

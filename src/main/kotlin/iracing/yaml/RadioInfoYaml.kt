@@ -20,28 +20,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
-import java.util.List;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class RadioInfoYaml {
-
-
-    public String RadioNum = "";
-
-    public String HopCount = "";
-
-    public String NumFrequencies = "";
-
-    public String TunedToFrequencyNum = "";
-
-    public String ScanningIsOn = "";
-
-    public List<RadioFrequenciesYaml> Frequencies;
-
-}
+data class RadioInfoYaml(
+    var RadioNum : String = "",
+    var HopCount : String = "",
+    var NumFrequencies : String = "",
+    var TunedToFrequencyNum : String = "",
+    var ScanningIsOn : String = "",
+    var Frequencies: List<RadioFrequenciesYaml>? = null
+)

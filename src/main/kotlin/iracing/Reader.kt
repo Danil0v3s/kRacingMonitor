@@ -91,20 +91,18 @@ class Reader {
         val header = readHeader(pointer)
 
         val buffer = getByteBuffer(pointer, header.varHeaderOffset, Header.HEADER_SIZE)
-        readVars(buffer, header)
+        val sessionInfoData = readSessionInfoData(buffer, header)
 
         return Data(
             header = header,
-            entries = emptyList(),
-            gpuEntries = emptyList()
+            gpuEntries = emptyList(),
+            sessionInfo = sessionInfoData
         )
     }
 
-    var write = true
-
-    private fun readVars(buffer: ByteBuffer, header: Header) {
+    private fun readSessionInfoData(buffer: ByteBuffer, header: Header): SessionInfoData {
         val yml = buffer.readString(buffer.remaining())
-        val result = yamlParser.readValue(yml, SessionInfoData::class.java)
+        return yamlParser.readValue(yml, SessionInfoData::class.java)
     }
 
     private fun getByteBuffer(pointer: Pointer, size: Int, skip: Int = 0): ByteBuffer {

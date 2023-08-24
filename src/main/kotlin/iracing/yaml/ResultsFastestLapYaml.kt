@@ -20,20 +20,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class ResultsFastestLapYaml {
-
-
-    public String CarIdx = "";
-
-    public String FastestLap = "";
-
-    public String FastestTime = "";
-
-}
+data class ResultsFastestLapYaml(
+    var CarIdx : String = "",
+    var FastestLap : String = "",
+    var FastestTime : String = "",
+)

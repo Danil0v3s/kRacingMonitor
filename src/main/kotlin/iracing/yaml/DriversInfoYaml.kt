@@ -20,66 +20,39 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
-import java.util.List;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class DriversInfoYaml {
-
-
-    public String DriverCarIdx = "";
-
-    public String DriverHeadPosX = "";
-
-    public String DriverHeadPosY = "";
-
-    public String DriverHeadPosZ = "";
-
-    public String DriverCarIdleRPM = "";
-
-    public String DriverCarRedLine = "";
-
-    public String DriverCarFuelKgPerLtr = "";
-
-    public String DriverCarFuelMaxLtr = "";
-
-    public String DriverCarMaxFuelPct = "";
-
-    public String DriverCarSLFirstRPM = "";
-
-    public String DriverCarSLShiftRPM = "";
-
-    public String DriverCarSLLastRPM = "";
-
-    public String DriverCarSLBlinkRPM = "";
-
-    public String DriverPitTrkPct = "";
-
-    public String DriverCarEstLapTime = "";
-
-    public String DriverSetupName = "";
-
-    public String DriverSetupIsModified = "";
-
-    public String DriverSetupLoadTypeName = "";
-
-    public String DriverSetupPassedTech = "";
-    public String DriverUserID = "";
-    public String PaceCarIdx = "";
-    public String DriverCarIsElectric = "";
-    public String DriverCarEngCylinderCount = "";
-    public String DriverCarGearNumForward = "";
-    public String DriverCarGearNeutral = "";
-    public String DriverCarGearReverse = "";
-    public String DriverCarVersion = "";
-    public String DriverIncidentCount = "";
-
-    public List<DriverInfoYaml> Drivers;
-
-
-}
+data class DriversInfoYaml(
+    var DriverCarIdx : String = "",
+    var DriverHeadPosX : String = "",
+    var DriverHeadPosY : String = "",
+    var DriverHeadPosZ : String = "",
+    var DriverCarIdleRPM : String = "",
+    var DriverCarRedLine : String = "",
+    var DriverCarFuelKgPerLtr : String = "",
+    var DriverCarFuelMaxLtr : String = "",
+    var DriverCarMaxFuelPct : String = "",
+    var DriverCarSLFirstRPM : String = "",
+    var DriverCarSLShiftRPM : String = "",
+    var DriverCarSLLastRPM : String = "",
+    var DriverCarSLBlinkRPM : String = "",
+    var DriverPitTrkPct : String = "",
+    var DriverCarEstLapTime : String = "",
+    var DriverSetupName : String = "",
+    var DriverSetupIsModified : String = "",
+    var DriverSetupLoadTypeName : String = "",
+    var DriverSetupPassedTech : String = "",
+    var DriverUserID : String = "",
+    var PaceCarIdx : String = "",
+    var DriverCarIsElectric : String = "",
+    var DriverCarEngCylinderCount : String = "",
+    var DriverCarGearNumForward : String = "",
+    var DriverCarGearNeutral : String = "",
+    var DriverCarGearReverse : String = "",
+    var DriverCarVersion : String = "",
+    var DriverIncidentCount : String = "",
+    var Drivers: List<DriverInfoYaml>? = null
+)

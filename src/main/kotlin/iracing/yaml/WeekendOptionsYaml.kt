@@ -20,61 +20,38 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class WeekendOptionsYaml {
-
-
-    public String NumStarters = "";
-
-    public String StartingGrid = "";
-
-    public String QualifyScoring = "";
-
-    public String CourseCautions = "";
-
-    public String StandingStart = "";
-
-    public String Restarts = "";
-
-    public String WeatherType = "";
-
-    public String Skies = "";
-
-    public String WindDirection = "";
-
-    public String WindSpeed = "";
-
-    public String WeatherTemp = "";
-
-    public String RelativeHumidity = "";
-
-    public String FogLevel = "";
-
-    public String Unofficial = "";
-
-    public String CommercialMode = "";
-
-    public String NightMode = "";
-
-    public String IsFixedSetup = "";
-
-    public String StrictLapsChecking = "";
-
-    public String HasOpenRegistration = "";
-    public String ShortParadeLap = "";
-    public String TimeOfDay = "";
-    public String Date = "";
-    public String EarthRotationSpeedupFactor = "";
-    public String HardcoreLevel = "";
-    public String NumJokerLaps = "";
-    public String IncidentLimit = "";
-    public String FastRepairsLimit = "";
-    public String GreenWhiteCheckeredLimit = "";
-
-}
+data class WeekendOptionsYaml(
+    var NumStarters : String = "",
+    var StartingGrid : String = "",
+    var QualifyScoring : String = "",
+    var CourseCautions : String = "",
+    var StandingStart : String = "",
+    var Restarts : String = "",
+    var WeatherType : String = "",
+    var Skies : String = "",
+    var WindDirection : String = "",
+    var WindSpeed : String = "",
+    var WeatherTemp : String = "",
+    var RelativeHumidity : String = "",
+    var FogLevel : String = "",
+    var Unofficial : String = "",
+    var CommercialMode : String = "",
+    var NightMode : String = "",
+    var IsFixedSetup : String = "",
+    var StrictLapsChecking : String = "",
+    var HasOpenRegistration : String = "",
+    var ShortParadeLap : String = "",
+    var TimeOfDay : String = "",
+    var Date : String = "",
+    var EarthRotationSpeedupFactor : String = "",
+    var HardcoreLevel : String = "",
+    var NumJokerLaps : String = "",
+    var IncidentLimit : String = "",
+    var FastRepairsLimit : String = "",
+    var GreenWhiteCheckeredLimit : String = "",
+)

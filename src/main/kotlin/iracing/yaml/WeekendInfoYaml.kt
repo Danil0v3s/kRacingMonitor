@@ -20,112 +20,62 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class WeekendInfoYaml {
-
-
-    public String TrackName = "";
-
-    public String TrackID = "";
-
-    public String TrackLength = "";
-
-    public String TrackDisplayName = "";
-
-    public String TrackDisplayShortName = "";
-
-    public String TrackConfigName = "";
-
-    public String TrackCity = "";
-
-    public String TrackCountry = "";
-
-    public String TrackAltitude = "";
-
-    public String TrackLatitude = "";
-
-    public String TrackLongitude = "";
-
-    public String TrackNorthOffset = "";
-
-    public String TrackNumTurns = "";
-
-    public String TrackPitSpeedLimit = "";
-
-    public String TrackType = "";
-
-    public String TrackWeatherType = "";
-
-    public String TrackSkies = "";
-
-    public String TrackSurfaceTemp = "";
-
-    public String TrackAirTemp = "";
-
-    public String TrackAirPressure = "";
-
-    public String TrackWindVel = "";
-
-    public String TrackWindDir = "";
-
-    public String TrackRelativeHumidity = "";
-
-    public String TrackFogLevel = "";
-
-    public String TrackCleanup = "";
-
-    public String TrackDynamicTrack = "";
-
-    public String SeriesID = "";
-
-    public String SeasonID = "";
-
-    public String SessionID = "";
-
-    public String SubSessionID = "";
-
-    public String LeagueID = "";
-
-    public String Official = "";
-
-    public String RaceWeek = "";
-
-    public String EventType = "";
-
-    public String Category = "";
-
-    public String SimMode = "";
-
-    public String TeamRacing = "";
-
-    public String MinDrivers = "";
-
-    public String MaxDrivers = "";
-
-    public String DCRuleSet = "";
-
-    public String QualifierMustStartRace = "";
-
-    public String NumCarClasses = "";
-
-    public String NumCarTypes = "";
-
-    public String TrackLengthOfficial = "";
-    public String TrackDirection = "";
-    public String TrackVersion = "";
-    public String HeatRacing = "";
-    public String BuildType = "";
-    public String BuildTarget = "";
-    public String BuildVersion = "";
-
-    public WeekendOptionsYaml WeekendOptions;
-
-    public TelemetryOptionsYaml TelemetryOptions;
-
-}
+data class WeekendInfoYaml(
+    var TrackName : String = "",
+    var TrackID : String = "",
+    var TrackLength : String = "",
+    var TrackDisplayName : String = "",
+    var TrackDisplayShortName : String = "",
+    var TrackConfigName : String = "",
+    var TrackCity : String = "",
+    var TrackCountry : String = "",
+    var TrackAltitude : String = "",
+    var TrackLatitude : String = "",
+    var TrackLongitude : String = "",
+    var TrackNorthOffset : String = "",
+    var TrackNumTurns : String = "",
+    var TrackPitSpeedLimit : String = "",
+    var TrackType : String = "",
+    var TrackWeatherType : String = "",
+    var TrackSkies : String = "",
+    var TrackSurfaceTemp : String = "",
+    var TrackAirTemp : String = "",
+    var TrackAirPressure : String = "",
+    var TrackWindVel : String = "",
+    var TrackWindDir : String = "",
+    var TrackRelativeHumidity : String = "",
+    var TrackFogLevel : String = "",
+    var TrackCleanup : String = "",
+    var TrackDynamicTrack : String = "",
+    var SeriesID : String = "",
+    var SeasonID : String = "",
+    var SessionID : String = "",
+    var SubSessionID : String = "",
+    var LeagueID : String = "",
+    var Official : String = "",
+    var RaceWeek : String = "",
+    var EventType : String = "",
+    var Category : String = "",
+    var SimMode : String = "",
+    var TeamRacing : String = "",
+    var MinDrivers : String = "",
+    var MaxDrivers : String = "",
+    var DCRuleSet : String = "",
+    var QualifierMustStartRace : String = "",
+    var NumCarClasses : String = "",
+    var NumCarTypes : String = "",
+    var TrackLengthOfficial : String = "",
+    var TrackDirection : String = "",
+    var TrackVersion : String = "",
+    var HeatRacing : String = "",
+    var BuildType : String = "",
+    var BuildTarget : String = "",
+    var BuildVersion : String = "",
+    var WeekendOptions: WeekendOptionsYaml? = null,
+    var TelemetryOptions: TelemetryOptionsYaml? = null,
+)

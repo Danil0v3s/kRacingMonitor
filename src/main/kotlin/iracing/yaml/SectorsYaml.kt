@@ -20,19 +20,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class SectorsYaml {
-
-
-    public String SectorNum = "";
-
-    public String SectorStartPct = "";
-
-
-}
+data class SectorsYaml(
+    var SectorNum: String = "",
+    var SectorStartPct: String = "",
+)

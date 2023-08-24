@@ -20,18 +20,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
-import java.util.List;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class SplitTimeInfoYaml {
-
-
-    public List<SectorsYaml> Sectors;
-
-}
+class SplitTimeInfoYaml(
+    var Sectors: List<SectorsYaml>? = null
+)

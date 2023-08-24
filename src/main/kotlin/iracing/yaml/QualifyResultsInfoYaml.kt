@@ -20,18 +20,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
-import java.util.List;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class QualifyResultsInfoYaml {
-
-
-    public List<QualifyResultInfoYaml> Results;
-
-}
+data class QualifyResultsInfoYaml(
+    var Results: List<QualifyResultInfoYaml>? = null
+)

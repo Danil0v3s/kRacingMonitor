@@ -20,16 +20,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
-
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class TelemetryOptionsYaml {
-
-
-    public String TelemetryDiskFile = "";
-
-}
+data class TelemetryOptionsYaml(
+    var TelemetryDiskFile: String = "",
+)

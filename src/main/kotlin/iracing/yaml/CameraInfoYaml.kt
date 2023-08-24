@@ -20,13 +20,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+package iracing.yaml
 
-package iracing.yaml;
-
-import kotlinx.serialization.Serializable;
+import kotlinx.serialization.Serializable
 
 @Serializable
-public class CameraInfoYaml {
-    public String CameraNum = "";
-    public String CameraName = "";
-}
+data class CameraInfoYaml(
+    var CameraNum: String = "",
+    var CameraName: String = "",
+)
