@@ -3,14 +3,14 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
-    id("org.jetbrains.compose") version "1.1.1"
+    kotlin("jvm") version "1.9.0"
+    kotlin("plugin.serialization") version "1.9.0"
+    id("org.jetbrains.compose") version "1.4.3"
     id("com.diffplug.spotless") version "6.1.0"
 }
 
 group = "br.com.firstsoft"
-version = "0.0.3"
+version = "0.0.1"
 
 repositories {
     google()
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.java.dev.jna:jna-platform:5.9.0")
+    implementation("net.java.dev.jna:jna-platform:5.12.1")
 
     implementation("io.ktor:ktor-server-netty:1.6.7")
     implementation("io.ktor:ktor-websockets:1.6.7")
@@ -27,12 +27,13 @@ dependencies {
     implementation("io.ktor:ktor-server-core:1.6.7")
     implementation("io.ktor:ktor-auth:1.6.7")
 
-    implementation("ch.qos.logback:logback-classic:1.2.10")
+    implementation("ch.qos.logback:logback-classic:1.4.7")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("com.charleskorn.kaml:kaml:0.55.0")
 
     implementation(compose.desktop.currentOs)
-    implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.1.1")
+    implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.3.1")
 }
 
 tasks.withType<KotlinCompile> {
