@@ -25,9 +25,9 @@ package iracing.yaml
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CamerasGroupsYaml (
-    var GroupNum : String = "",
-    var GroupName : String = "",
-    var IsScenic : String = "",
+data class CamerasGroupsYaml(
+    var GroupNum: String = "",
+    var GroupName: String = "",
+    var IsScenic: String = "",
     var Cameras: List<CameraInfoYaml>? = null
 )

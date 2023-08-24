@@ -25,10 +25,10 @@ package iracing.yaml
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class QualifyResultInfoYaml (
-    var Position : String = "",
-    var ClassPosition : String = "",
-    var CarIdx : String = "",
-    var FastestLap : String = "",
-    var FastestTime : String = "",
+data class QualifyResultInfoYaml(
+    var Position: String = "",
+    var ClassPosition: String = "",
+    var CarIdx: String = "",
+    var FastestLap: String = "",
+    var FastestTime: String = "",
 )

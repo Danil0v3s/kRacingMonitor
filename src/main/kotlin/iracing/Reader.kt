@@ -30,8 +30,6 @@ object MAHMSizes {
 
     // latest version of our telemetry headers
     const val IRSDK_VER = 2
-
-
 }
 
 private const val MEMORY_MAP_FILE_NAME = "Local\\IRSDKMemMapFileName"

@@ -31,10 +31,12 @@ data class Header(
     fun getVarBufBufOffset(varBuf: Int, sharedMemory: Pointer): Int = sharedMemory.getInt((varBuf * VARBUF_SIZE) + 52L)
 
     fun getLatestVarByteBuffer(sharedMemory: Pointer): ByteBuffer {
-        return ByteBuffer.wrap(sharedMemory.getByteArray(
-            getVarBufBufOffset(getLatestVarBuffIdx(sharedMemory), sharedMemory) * 1L,
-            bufLen
-        )).apply {
+        return ByteBuffer.wrap(
+            sharedMemory.getByteArray(
+                getVarBufBufOffset(getLatestVarBuffIdx(sharedMemory), sharedMemory) * 1L,
+                bufLen
+            )
+        ).apply {
             order(ByteOrder.LITTLE_ENDIAN)
         }
     }

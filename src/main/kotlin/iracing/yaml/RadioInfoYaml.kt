@@ -26,10 +26,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RadioInfoYaml(
-    var RadioNum : String = "",
-    var HopCount : String = "",
-    var NumFrequencies : String = "",
-    var TunedToFrequencyNum : String = "",
-    var ScanningIsOn : String = "",
+    var RadioNum: String = "",
+    var HopCount: String = "",
+    var NumFrequencies: String = "",
+    var TunedToFrequencyNum: String = "",
+    var ScanningIsOn: String = "",
     var Frequencies: List<RadioFrequenciesYaml>? = null
 )

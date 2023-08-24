@@ -26,7 +26,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ResultsFastestLapYaml(
-    var CarIdx : String = "",
-    var FastestLap : String = "",
-    var FastestTime : String = "",
+    var CarIdx: String = "",
+    var FastestLap: String = "",
+    var FastestTime: String = "",
 )

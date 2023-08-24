@@ -26,6 +26,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SessionInfoYaml(
-    var NumSession : String = "",
+    var NumSession: String = "",
     var Sessions: List<SessionYaml>? = null
 )

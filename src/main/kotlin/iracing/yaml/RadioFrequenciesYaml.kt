@@ -26,15 +26,15 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RadioFrequenciesYaml(
-    var FrequencyNum : String = "",
-    var FrequencyName : String = "",
-    var Priority : String = "",
-    var CarIdx : String = "",
-    var EntryIdx : String = "",
-    var ClubID : String = "",
-    var CanScan : String = "",
-    var CanSquawk : String = "",
-    var Muted : String = "",
-    var IsMutable : String = "",
-    var IsDeletable : String = "",
+    var FrequencyNum: String = "",
+    var FrequencyName: String = "",
+    var Priority: String = "",
+    var CarIdx: String = "",
+    var EntryIdx: String = "",
+    var ClubID: String = "",
+    var CanScan: String = "",
+    var CanSquawk: String = "",
+    var Muted: String = "",
+    var IsMutable: String = "",
+    var IsDeletable: String = "",
 )

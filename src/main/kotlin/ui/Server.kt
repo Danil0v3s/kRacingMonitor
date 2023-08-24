@@ -49,11 +49,11 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
 import io.ktor.websocket.WebSockets
 import io.ktor.websocket.webSocket
+import iracing.Reader
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import iracing.Reader
 import repository.PreferencesRepository
 
 data class ServerState(

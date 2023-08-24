@@ -26,6 +26,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RadiosInfoYaml(
-    var SelectedRadioNum : String = "",
+    var SelectedRadioNum: String = "",
     var Radios: List<RadioInfoYaml>? = null
 )
