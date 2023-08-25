@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Data(
-    val telemetry: Map<String, TelemetryData>
+    val telemetry: Map<String, TelemetryData>,
 )

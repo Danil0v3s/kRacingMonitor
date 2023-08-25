@@ -36,12 +36,15 @@ import androidx.compose.ui.unit.dp
 import io.ktor.application.Application
 import io.ktor.application.ApplicationStarted
 import io.ktor.application.ApplicationStopped
+import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authenticate
 import io.ktor.auth.basic
 import io.ktor.http.cio.websocket.send
+import io.ktor.response.respond
+import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.ApplicationEngineEnvironment
 import io.ktor.server.engine.EngineConnectorConfig
@@ -296,37 +299,31 @@ private fun Application.extracted(
 
     routing {
         authenticate("auth-basic") {
-            webSocket("/socket") {
+            webSocket("/telemetry") {
                 reader.currentData.filterNotNull().collect {
-//                        val queryParams = call.request.queryParameters
-//                        val filters = queryParams["filter"]?.split(",").orEmpty().map { SourceID.fromString(it) }
-//                        val shouldUseDto = queryParams["slim"]?.toBoolean() ?: false
+                    val queryParams = call.request.queryParameters
+                    val filters = queryParams["filter"]?.split(",").orEmpty()
 
                     val result = when {
-//                            filters.isNotEmpty() && shouldUseDto -> {
-//                                val result = it.copy(
-//                                    entries = it.entries.filter {
-//                                        filters.contains(it.dwSrcId)
-//                                    }
-//                                )
-//                                Json.encodeToString(result.toDTO())
-//                            }
-//
-//                            filters.isNotEmpty() -> {
-//                                val result = it.copy(
-//                                    entries = it.entries.filter {
-//                                        filters.contains(it.dwSrcId)
-//                                    }
-//                                )
-//                                Json.encodeToString(result)
-//                            }
-//
-//                            shouldUseDto -> Json.encodeToString(it.toDTO())
+                        filters.isNotEmpty() -> {
+                            val result = it.copy(
+                                telemetry = it.telemetry.filter { telemetryData ->
+                                    filters.contains(telemetryData.key)
+                                }
+                            )
+                            Json.encodeToString(result)
+                        }
+
                         else -> Json.encodeToString(it)
                     }
 
                     send(result)
                 }
+            }
+
+            get("/session") {
+                val sessionInfoData = reader.readSessionInfoData()
+                call.respond(Json.encodeToString(sessionInfoData))
             }
         }
     }

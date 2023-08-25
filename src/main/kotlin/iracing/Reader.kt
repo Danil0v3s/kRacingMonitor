@@ -43,11 +43,10 @@ class Reader {
     private val windowsService = WindowsService()
     private var pollingJob: Job? = null
 
-    private var yamlMemoryMapFile: WinNT.HANDLE? = null
-    private var yamlPointer: Pointer? = null
+    private var memoryMapFile: WinNT.HANDLE? = null
+    private var pointer: Pointer? = null
 
-    private var eventsMemoryMapFile: WinNT.HANDLE? = null
-    private var eventsPointer: Pointer? = null
+    private var header: Header? = null
 
     private val yamlParser by lazy {
         ObjectMapper(YAMLFactory()).apply {
@@ -60,11 +59,11 @@ class Reader {
     val currentData = flow<Data?> {
         tryOpenMemoryFile()
 
-        yamlPointer ?: return@flow
+        pointer ?: return@flow
 
         while (true) {
             try {
-                emit(readData(yamlPointer!!))
+                emit(readData(pointer!!))
                 delay(pollingInterval)
             } catch (e: CancellationException) {
                 break
@@ -75,21 +74,25 @@ class Reader {
     fun stopPolling() {
         pollingJob?.cancel()
         pollingJob = null
-        yamlPointer?.let { windowsService.unmapViewOfFile(it) }
-        yamlMemoryMapFile?.let { windowsService.closeHandle(it) }
+        pointer?.let { windowsService.unmapViewOfFile(it) }
+        memoryMapFile?.let { windowsService.closeHandle(it) }
     }
 
     fun tryOpenMemoryFile() {
+        if (memoryMapFile != null) return
         windowsService.openMemoryMapFile(YML_MAP_FILE_NAME)?.let { handle ->
-            yamlMemoryMapFile = handle
-            yamlPointer = windowsService.mapViewOfFile(handle) ?: throw Error("Could not create pointer")
+            memoryMapFile = handle
+            pointer = windowsService.mapViewOfFile(handle) ?: throw Error("Could not create pointer")
         } ?: throw Error("Could not read MAHMSharedMemory")
     }
 
-    fun tryOpenEventMemoryFile() {
-        windowsService.openEventFile(EVENTS_MAP_FILE_NAME)?.let { handle ->
-            eventsMemoryMapFile = handle
-        } ?: throw Error("Could not read MAHMSharedMemory")
+    fun readSessionInfoData(): SessionInfoData? {
+        if (header == null || pointer == null) {
+            tryOpenMemoryFile()
+            this.header = readHeader(pointer!!)
+        }
+
+        return readSessionInfoData(getByteBuffer(pointer!!, header!!.sessionInfoLen, header!!.sessionInfoOffset))
     }
 
     private fun readHeader(pointer: Pointer): Header {
@@ -100,7 +103,20 @@ class Reader {
 
     private fun readData(pointer: Pointer): Data {
         val header = readHeader(pointer)
+        this.header = header
         val latestPointerBuffer = header.getLatestVarByteBuffer(pointer)
+        val telemetryData = readTelemetryData(header, pointer, latestPointerBuffer)
+
+        return Data(
+            telemetry = telemetryData
+        )
+    }
+
+    private fun readTelemetryData(
+        header: Header,
+        pointer: Pointer,
+        latestPointerBuffer: ByteBuffer
+    ): MutableMap<String, TelemetryData> {
         val telemetryData = mutableMapOf<String, TelemetryData>()
 
         for (i in 0 until header.numVars) {
@@ -143,13 +159,10 @@ class Reader {
                 unit = unit
             )
         }
-
-        return Data(
-            telemetry = telemetryData
-        )
+        return telemetryData
     }
 
-    private fun readSessionInfoData(buffer: ByteBuffer, header: Header): SessionInfoData {
+    private fun readSessionInfoData(buffer: ByteBuffer): SessionInfoData {
         val yml = buffer.readString(buffer.remaining())
         return yamlParser.readValue(yml, SessionInfoData::class.java)
     }
