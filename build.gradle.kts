@@ -20,17 +20,16 @@ repositories {
 dependencies {
     implementation("net.java.dev.jna:jna-platform:5.12.1")
 
-    implementation("io.ktor:ktor-server-netty:1.6.7")
+    implementation("io.ktor:ktor-client-okhttp:1.6.7")
     implementation("io.ktor:ktor-websockets:1.6.7")
-    implementation("io.ktor:ktor-serialization:1.6.7")
-    implementation("io.ktor:ktor-server-core:1.6.7")
+    implementation("io.ktor:ktor-client-serialization:1.6.7")
+    implementation("io.ktor:ktor-client-json:1.6.7")
+    implementation("io.ktor:ktor-client-core:1.6.7")
     implementation("io.ktor:ktor-auth:1.6.7")
 
     implementation("ch.qos.logback:logback-classic:1.4.7")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.2")
 
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.3.1")

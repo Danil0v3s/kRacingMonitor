@@ -22,29 +22,15 @@
  */
 package iracing.yaml
 
-import com.fasterxml.jackson.annotation.JsonInclude
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class SessionInfoData(
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     var WeekendInfo: WeekendInfoYaml? = null,
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     var SessionInfo: SessionInfoYaml? = null,
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     var QualifyResultsInfo: QualifyResultsInfoYaml? = null,
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     var CameraInfo: CamerasInfoYaml? = null,
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     var RadioInfo: RadiosInfoYaml? = null,
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     var DriverInfo: DriversInfoYaml? = null,
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     var SplitTimeInfo: SplitTimeInfoYaml? = null,
 )

@@ -6,5 +6,5 @@ pluginManagement {
     }
     
 }
-rootProject.name = "kRacing"
+rootProject.name = "kRacingMonitor"
 
