@@ -8,6 +8,9 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.sun.jna.Pointer
 import com.sun.jna.platform.win32.WinNT
+import iracing.MAHMSizes.IRSDK_MAX_DESC
+import iracing.MAHMSizes.IRSDK_MAX_STRING
+import iracing.telemetry.TelemetryData
 import iracing.yaml.SessionInfoData
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -32,16 +35,19 @@ object MAHMSizes {
     const val IRSDK_VER = 2
 }
 
-private const val MEMORY_MAP_FILE_NAME = "Local\\IRSDKMemMapFileName"
-private const val IRSDK_DATAVALIDEVENTNAME = "Local\\IRSDKDataValidEvent"
+private const val YML_MAP_FILE_NAME = "Local\\IRSDKMemMapFileName"
+private const val EVENTS_MAP_FILE_NAME = "Local\\IRSDKDataValidEvent"
 
 class Reader {
 
     private val windowsService = WindowsService()
     private var pollingJob: Job? = null
 
-    private var memoryMapFile: WinNT.HANDLE? = null
-    private var pointer: Pointer? = null
+    private var yamlMemoryMapFile: WinNT.HANDLE? = null
+    private var yamlPointer: Pointer? = null
+
+    private var eventsMemoryMapFile: WinNT.HANDLE? = null
+    private var eventsPointer: Pointer? = null
 
     private val yamlParser by lazy {
         ObjectMapper(YAMLFactory()).apply {
@@ -53,11 +59,12 @@ class Reader {
     var pollingInterval = 200L
     val currentData = flow<Data?> {
         tryOpenMemoryFile()
-        pointer ?: return@flow
+
+        yamlPointer ?: return@flow
 
         while (true) {
             try {
-                emit(readData(pointer!!))
+                emit(readData(yamlPointer!!))
                 delay(pollingInterval)
             } catch (e: CancellationException) {
                 break
@@ -68,14 +75,20 @@ class Reader {
     fun stopPolling() {
         pollingJob?.cancel()
         pollingJob = null
-        pointer?.let { windowsService.unmapViewOfFile(it) }
-        memoryMapFile?.let { windowsService.closeHandle(it) }
+        yamlPointer?.let { windowsService.unmapViewOfFile(it) }
+        yamlMemoryMapFile?.let { windowsService.closeHandle(it) }
     }
 
     fun tryOpenMemoryFile() {
-        windowsService.openMemoryMapFile(MEMORY_MAP_FILE_NAME)?.let { handle ->
-            memoryMapFile = handle
-            pointer = windowsService.mapViewOfFile(handle) ?: throw Error("Could not create pointer")
+        windowsService.openMemoryMapFile(YML_MAP_FILE_NAME)?.let { handle ->
+            yamlMemoryMapFile = handle
+            yamlPointer = windowsService.mapViewOfFile(handle) ?: throw Error("Could not create pointer")
+        } ?: throw Error("Could not read MAHMSharedMemory")
+    }
+
+    fun tryOpenEventMemoryFile() {
+        windowsService.openEventFile(EVENTS_MAP_FILE_NAME)?.let { handle ->
+            eventsMemoryMapFile = handle
         } ?: throw Error("Could not read MAHMSharedMemory")
     }
 
@@ -87,14 +100,52 @@ class Reader {
 
     private fun readData(pointer: Pointer): Data {
         val header = readHeader(pointer)
+        val latestPointerBuffer = header.getLatestVarByteBuffer(pointer)
+        val telemetryData = mutableMapOf<String, TelemetryData>()
 
-        val buffer = getByteBuffer(pointer, header.varHeaderOffset, Header.HEADER_SIZE)
-        val sessionInfoData = readSessionInfoData(buffer, header)
+        for (i in 0 until header.numVars) {
+            val buffer = pointer.getByteArray(header.varHeaderOffset + (144L * i), 144).let {
+                ByteBuffer.wrap(it).order(
+                    ByteOrder.LITTLE_ENDIAN
+                )
+            }
+
+            val type = buffer.int
+            val offset = buffer.int
+            val count = buffer.int
+
+            var localBuffer = ByteArray(IRSDK_MAX_STRING)
+            buffer.position(16)
+            buffer[localBuffer, 0, localBuffer.size]
+            val name = String(localBuffer).replace("[\u0000]".toRegex(), "")
+
+            buffer.position(16 + IRSDK_MAX_STRING + IRSDK_MAX_DESC)
+            buffer[localBuffer, 0, localBuffer.size]
+            val unit = String(localBuffer).replace("[\u0000]".toRegex(), "")
+
+            localBuffer = ByteArray(IRSDK_MAX_DESC)
+            buffer.position(16 + IRSDK_MAX_STRING)
+            buffer[localBuffer, 0, localBuffer.size]
+            val desc = String(localBuffer).replace("[\u0000]".toRegex(), "")
+
+            val value = when (type) {
+                // char, bool
+                0, 1 -> latestPointerBuffer.getChar(offset).toString().toBoolean()
+                2, 3 -> latestPointerBuffer.getInt(offset)
+                4 -> latestPointerBuffer.getFloat(offset)
+                5 -> latestPointerBuffer.getDouble(offset)
+                else -> -1
+            }.toString()
+
+            telemetryData[name] = TelemetryData(
+                description = desc,
+                value = value,
+                unit = unit
+            )
+        }
 
         return Data(
-            header = header,
-            gpuEntries = emptyList(),
-            sessionInfo = sessionInfoData
+            telemetry = telemetryData
         )
     }
 
@@ -105,10 +156,10 @@ class Reader {
 
     private fun getByteBuffer(pointer: Pointer, size: Int, skip: Int = 0): ByteBuffer {
         val buffer = ByteBuffer.allocateDirect(size)
-        buffer.put(pointer.getByteArray(0, size))
+        buffer.put(pointer.getByteArray(skip * 1L, size))
         buffer.order(ByteOrder.LITTLE_ENDIAN)
         buffer.rewind()
-        buffer.position(skip)
+        // buffer.position(skip)
 
         return buffer
     }

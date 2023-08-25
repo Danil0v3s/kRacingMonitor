@@ -16,6 +16,12 @@ class WindowsService {
         return memMapFile
     }
 
+    fun openEventFile(filename: String): WinNT.HANDLE? {
+        val memMapFile = Kernel32Impl.KERNEL_32.OpenEvent(WinNT.SYNCHRONIZE, false, filename)
+        lastError = Kernel32Impl.KERNEL_32.GetLastError()
+        return memMapFile
+    }
+
     fun closeHandle(handle: WinNT.HANDLE) {
         Kernel32Impl.KERNEL_32.CloseHandle(handle)
     }

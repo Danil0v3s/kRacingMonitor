@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import io.ktor.application.Application
 import io.ktor.application.ApplicationStarted
 import io.ktor.application.ApplicationStopped
 import io.ktor.application.install
@@ -50,7 +51,6 @@ import io.ktor.server.netty.NettyApplicationEngine
 import io.ktor.websocket.WebSockets
 import io.ktor.websocket.webSocket
 import iracing.Reader
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -272,28 +272,37 @@ private fun createServer(
     onServerEvent: (ServerEvent) -> Unit
 ): NettyApplicationEngine {
     return embeddedServer(Netty, port = options.port.toInt()) {
-        install(WebSockets)
-        install(Authentication) {
-            basic("auth-basic") {
-                validate { credentials ->
-                    if (credentials.name == options.user && credentials.password == options.pass) {
-                        UserIdPrincipal(credentials.name)
-                    } else {
-                        null
-                    }
+        extracted(options, reader, onServerEvent)
+    }
+}
+
+private fun Application.extracted(
+    options: ServerState,
+    reader: Reader,
+    onServerEvent: (ServerEvent) -> Unit
+) {
+    install(WebSockets)
+    install(Authentication) {
+        basic("auth-basic") {
+            validate { credentials ->
+                if (credentials.name == options.user && credentials.password == options.pass) {
+                    UserIdPrincipal(credentials.name)
+                } else {
+                    null
                 }
             }
         }
+    }
 
-        routing {
-            authenticate("auth-basic") {
-                webSocket("/socket") {
-                    reader.currentData.filterNotNull().collect {
+    routing {
+        authenticate("auth-basic") {
+            webSocket("/socket") {
+                reader.currentData.filterNotNull().collect {
 //                        val queryParams = call.request.queryParameters
 //                        val filters = queryParams["filter"]?.split(",").orEmpty().map { SourceID.fromString(it) }
 //                        val shouldUseDto = queryParams["slim"]?.toBoolean() ?: false
 
-                        val result = when {
+                    val result = when {
 //                            filters.isNotEmpty() && shouldUseDto -> {
 //                                val result = it.copy(
 //                                    entries = it.entries.filter {
@@ -313,25 +322,24 @@ private fun createServer(
 //                            }
 //
 //                            shouldUseDto -> Json.encodeToString(it.toDTO())
-                            else -> Json.encodeToString(it)
-                        }
-
-                        send(result)
+                        else -> Json.encodeToString(it)
                     }
+
+                    send(result)
                 }
             }
         }
+    }
 
-        environment.monitor.apply {
-            subscribe(ApplicationStarted) {
-                reader.pollingInterval = options.pollingRate.toLong()
-                reader.tryOpenMemoryFile()
-                onServerEvent(ServerEvent.Started((environment as ApplicationEngineEnvironment).connectors.first()))
-            }
-            subscribe(ApplicationStopped) {
-                onServerEvent(ServerEvent.Stopped)
-                reader.stopPolling()
-            }
+    environment.monitor.apply {
+        subscribe(ApplicationStarted) {
+            reader.pollingInterval = options.pollingRate.toLong()
+            reader.tryOpenMemoryFile()
+            onServerEvent(ServerEvent.Started((environment as ApplicationEngineEnvironment).connectors.first()))
+        }
+        subscribe(ApplicationStopped) {
+            onServerEvent(ServerEvent.Stopped)
+            reader.stopPolling()
         }
     }
 }
