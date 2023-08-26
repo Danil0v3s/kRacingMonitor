@@ -19,7 +19,7 @@ fun main() = application {
         visible = true,
         title = "kMonitor",
         resizable = false,
-        undecorated = true
+        undecorated = false
     ) {
         App()
     }

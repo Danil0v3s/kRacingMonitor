@@ -36,6 +36,8 @@ dependencies {
 
     implementation("com.diozero:diozero-core:1.3.5")
     implementation("com.diozero:diozero-ws281x-java:1.3.5")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 }
 
 tasks.withType<KotlinCompile> {
