@@ -15,6 +15,7 @@ import ui.components.grid.GridPad
 import ui.components.grid.GridPadCells
 import ui.components.grid.GridPadScope
 import kotlin.math.floor
+import kotlin.math.roundToInt
 
 @Composable
 fun App() = MaterialTheme {
@@ -36,14 +37,14 @@ fun App() = MaterialTheme {
         ) {
             FirstRow(telemetry.value!!)
             SecondRow(telemetry.value!!)
-            ThirdRow()
+            ThirdRow(telemetry.value!!)
             FourthRow(telemetry.value!!)
-            FifthRow()
+            FifthRow(telemetry.value!!)
         }
     }
 }
 
-private fun GridPadScope.FifthRow() {
+private fun GridPadScope.FifthRow(telemetry: Data) {
     item(row = 4, column = 0) {
         Cell(title = "MIX")
     }
@@ -51,16 +52,20 @@ private fun GridPadScope.FifthRow() {
         Cell(title = "PED")
     }
     item(row = 4, column = 2) {
-        Cell(title = "TC 1")
+        val tc = telemetry.telemetry["dcTractionControl"]?.value?.toFloat()?.roundToInt()
+        Cell(title = "TC 1", content = tc.toString())
     }
     item(row = 4, column = 3) {
-        Cell(title = "TC 2")
+        val tc = telemetry.telemetry["dcTractionControl"]?.value?.toFloat()?.roundToInt()
+        Cell(title = "TC 2", content = tc.toString())
     }
     item(row = 4, column = 4) {
-        Cell(title = "ABS")
+        val abs = telemetry.telemetry["dcABS"]?.value?.toFloat()?.roundToInt()
+        Cell(title = "ABS", content = abs.toString())
     }
     item(row = 4, column = 5) {
-        Cell(title = "BAL")
+        val brakeBias = telemetry.telemetry["dcBrakeBias"]?.value?.toFloat() ?: 0
+        Cell(title = "BAL", content = String.format("%.1f", brakeBias))
     }
 }
 
@@ -99,7 +104,7 @@ private fun GridPadScope.FourthRow(telemetry: Data) {
     }
 }
 
-private fun GridPadScope.ThirdRow() {
+private fun GridPadScope.ThirdRow(telemetry: Data) {
     item(row = 2, column = 0) {
         Cell(title = "P RL")
     }
