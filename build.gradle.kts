@@ -33,6 +33,9 @@ dependencies {
 
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.compose.material:material-icons-extended-desktop:1.3.1")
+
+    implementation("com.diozero:diozero-core:1.3.5")
+    implementation("com.diozero:diozero-ws281x-java:1.3.5")
 }
 
 tasks.withType<KotlinCompile> {
@@ -51,7 +54,7 @@ compose.desktop {
     application {
         mainClass = "MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Msi)
+            targetFormats(TargetFormat.Msi, TargetFormat.AppImage)
             packageName = "kMonitor"
             packageVersion = "0.0.1"
         }
