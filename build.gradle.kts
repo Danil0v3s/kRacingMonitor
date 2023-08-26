@@ -18,8 +18,6 @@ repositories {
 }
 
 dependencies {
-    implementation("net.java.dev.jna:jna-platform:5.12.1")
-
     implementation("io.ktor:ktor-client-okhttp:1.6.7")
     implementation("io.ktor:ktor-websockets:1.6.7")
     implementation("io.ktor:ktor-client-serialization:1.6.7")
