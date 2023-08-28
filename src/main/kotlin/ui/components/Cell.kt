@@ -25,23 +25,34 @@ fun Cell(
     content: String? = null,
     fontSize: TextUnit = 24.sp,
     textColor: Color = Color.White,
+    backgroundColor: Color = Color.Black,
     modifier: Modifier = Modifier
 ) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
+            .background(backgroundColor)
             .padding(4.dp)
     ) {
 
-        Box(modifier.fillMaxSize().align(Alignment.Center).border(BorderStroke(2.dp, Color.White)))
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .align(Alignment.Center)
+                .border(BorderStroke(2.dp, if (backgroundColor == Color.White) Color.Black else Color.White))
+        )
 
         if (title != null) {
             Text(
                 text = title,
-                color = Color.White,
+                color = if (backgroundColor == Color.White) Color.Black else Color.White,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight(450),
-                modifier = Modifier.align(Alignment.TopCenter).background(Color.Black).padding(horizontal = 6.dp).offset(y = (-4).dp)
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .background(backgroundColor)
+                    .padding(horizontal = 6.dp)
+                    .offset(y = (-4).dp)
             )
         }
 

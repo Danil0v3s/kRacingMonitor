@@ -54,7 +54,7 @@ compose.desktop {
     application {
         mainClass = "MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.Msi, TargetFormat.AppImage)
+            targetFormats(TargetFormat.Msi, TargetFormat.Deb)
             packageName = "kMonitor"
             packageVersion = "0.0.1"
         }
