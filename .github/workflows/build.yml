@@ -36,7 +36,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: arm64v8/gradle
+      image: daniloleemes/kracing-builder:latest
 
     steps:
       - name: Check out the source code
