@@ -176,7 +176,7 @@ private fun GridPadScope.FifthRow(telemetry: Map<String, TelemetryData>) {
         Cell(title = "ABS", content = abs.toString())
     }
     item(row = 4, column = 5) {
-        val brakeBias = telemetry["dcBrakeBias"]?.value?.toFloat() ?: 0
+        val brakeBias = telemetry["dcBrakeBias"]?.value?.toFloat() ?: 0.0f
         Cell(title = "BAL", content = String.format("%.1f", brakeBias))
     }
 }
