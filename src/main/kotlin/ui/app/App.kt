@@ -16,10 +16,10 @@ fun App() = MaterialTheme {
 //    val sessionState = GameDataRepository.session.collectAsState(null)
     val telemetryState = GameDataRepository.telemetry.collectAsState(null)
 
-    LaunchedEffect(Unit) {
-        val driver = WS281x(18, 125, 18)
-        PixelAnimations.demo(driver)
-    }
+//    LaunchedEffect(Unit) {
+//        val driver = WS281x(18, 125, 18)
+//        PixelAnimations.demo(driver)
+//    }
 
     if (telemetryState.value == null) {
         Box {}
