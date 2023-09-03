@@ -7,7 +7,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import repository.GameDataRepository
 import com.diozero.ws281xj.PixelAnimations
-import com.diozero.ws281xj.rpiws281x.WS281x
+import com.diozero.ws281xj.StripType
+import com.diozero.ws281xj.spi.WS281xSpi
 import ui.components.dashboards.MainDashboard
 
 @Composable
@@ -16,10 +17,10 @@ fun App() = MaterialTheme {
 //    val sessionState = GameDataRepository.session.collectAsState(null)
     val telemetryState = GameDataRepository.telemetry.collectAsState(null)
 
-//    LaunchedEffect(Unit) {
-//        val driver = WS281x(18, 125, 18)
-//        PixelAnimations.demo(driver)
-//    }
+    LaunchedEffect(Unit) {
+        val driver = WS281xSpi(0,8, StripType.WS2812, 18, 125)
+        PixelAnimations.demo(driver)
+    }
 
     if (telemetryState.value == null) {
         Box {}
