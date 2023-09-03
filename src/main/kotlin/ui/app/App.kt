@@ -8,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import repository.GameDataRepository
 import com.diozero.ws281xj.PixelAnimations
 import com.diozero.ws281xj.StripType
+import com.diozero.ws281xj.rpiws281x.WS281x
 import com.diozero.ws281xj.spi.WS281xSpi
 import ui.components.dashboards.MainDashboard
 
@@ -18,7 +19,7 @@ fun App() = MaterialTheme {
     val telemetryState = GameDataRepository.telemetry.collectAsState(null)
 
     LaunchedEffect(Unit) {
-        val driver = WS281xSpi(0,8, StripType.WS2812, 18, 125)
+        val driver = WS281x(10, 125, 18)
         PixelAnimations.demo(driver)
     }
 
