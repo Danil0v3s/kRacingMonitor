@@ -13,7 +13,7 @@ link(shield('License Apache', 'license', 'apache', 'brightgreen'), 'https://tldr
 <!---freshmark /shields -->
 
 ### What is this?
-![image](https://user-images.githubusercontent.com/13068064/181916509-d0e8811f-0387-4498-b5bb-787e1e8484c6.png)
+![image](https://github.com/Danil0v3s/kRacingMonitor/assets/13068064/c69ede0f-e7b3-43e6-b4a7-96163d93b520)
 
 A small desktop companion application to enable you to provide MSI Afterburner data to your network
 
