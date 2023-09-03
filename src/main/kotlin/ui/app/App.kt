@@ -6,21 +6,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import repository.GameDataRepository
-import com.diozero.ws281xj.PixelAnimations
-import com.diozero.ws281xj.StripType
-import com.diozero.ws281xj.rpiws281x.WS281x
-import com.diozero.ws281xj.spi.WS281xSpi
+import repository.LedsController
 import ui.components.dashboards.MainDashboard
 
 @Composable
 fun App() = MaterialTheme {
 
-//    val sessionState = GameDataRepository.session.collectAsState(null)
+    val sessionState = GameDataRepository.session.collectAsState(null)
     val telemetryState = GameDataRepository.telemetry.collectAsState(null)
 
-    LaunchedEffect(Unit) {
-        val driver = WS281x(10, 125, 18)
-        PixelAnimations.demo(driver)
+    LaunchedEffect(sessionState) {
+        sessionState.value?.DriverInfo?.also {
+
+            LedsController.setRevOptions(
+                it.DriverCarSLFirstRPM,
+                it.DriverCarSLShiftRPM,
+                it.DriverCarSLLastRPM,
+                it.DriverCarSLBlinkRPM
+            )
+        }
+    }
+
+    LaunchedEffect(telemetryState.value) {
+        val rpm = telemetryState.value?.telemetry?.get("RPM")?.value?.toIntOrNull() ?: 0
+        LedsController.updateRevs(rpm)
     }
 
     if (telemetryState.value == null) {
