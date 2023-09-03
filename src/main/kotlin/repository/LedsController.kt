@@ -1,6 +1,5 @@
 package repository
 
-import com.diozero.ws281xj.PixelAnimations
 import com.diozero.ws281xj.PixelColour
 import com.diozero.ws281xj.rpiws281x.WS281x
 import kotlinx.coroutines.CoroutineScope
@@ -22,35 +21,64 @@ object LedsController {
         }
     }
 
-    private var firstRPM: Int = 0
-    private var shiftRPM: Int = 0
-    private var lastRPM: Int = 0
-    private var blinkRPM: Int = 0
+    private var idleRPM: Float = -1f
+    private var firstRPM: Float = -1f
+    private var shiftRPM: Float = -1f
+    private var lastRPM: Float = -1f
+    private var blinkRPM: Float = -1f
 
     private val BLUE = PixelColour.createColourRGB(0, 0, 255)
     private val GREEN = PixelColour.createColourRGB(0, 255, 0)
     private val YELLOW = PixelColour.createColourRGB(255, 255, 0)
     private val RED = PixelColour.createColourRGB(255, 0, 0)
 
-    fun setRevOptions(firstRPM: String, shiftRPM: String, lastRPM: String, blinkRPM: String) {
-        this.firstRPM = firstRPM.toFloat().toInt()
-        this.shiftRPM = shiftRPM.toFloat().toInt()
-        this.lastRPM = lastRPM.toFloat().toInt()
-        this.blinkRPM = blinkRPM.toFloat().toInt()
+    private val blueRange = listOf(1, 2, 3)
+    private val greenRange = listOf(4, 5, 6, 7)
+    private val yellowRange = listOf(8, 9, 10, 11, 12)
+    private val redRange = listOf(13, 14, 15, 16, 17)
+
+    fun setRevOptions(idleRPM: String, firstRPM: String, shiftRPM: String, lastRPM: String, blinkRPM: String) {
+        this.idleRPM = idleRPM.toFloat()
+        this.firstRPM = firstRPM.toFloat()
+        this.shiftRPM = shiftRPM.toFloat()
+        this.lastRPM = lastRPM.toFloat()
+        this.blinkRPM = blinkRPM.toFloat()
     }
 
-    suspend fun updateRevs(current: Int) = CoroutineScope(Dispatchers.IO).launch {
+    fun updateRevs(current: Int) = CoroutineScope(Dispatchers.IO).launch {
+        // not initialized yet
+        if (firstRPM < 0) return@launch
+
+        val percentagePerLed = 100f / NUM_LEDS
+        var remainingPercentage = map(current, idleRPM, lastRPM, 0f, 100f)
+
         controller?.apply {
-            when {
-                current < firstRPM -> {
-                    setPixelColour(0, BLUE)
-                    setPixelColour(1, BLUE)
-                    setPixelColour(2, BLUE)
-                    setPixelColour(3, BLUE)
-                    render()
-                }
-                current >= blinkRPM -> PixelAnimations.colourWipe(controller, RED, 10)
+            var ledIndex = 0
+            while (remainingPercentage > 0f && ledIndex < NUM_LEDS - 1) {
+                val color = getColorForPixel(ledIndex)
+                setPixelColour(ledIndex, color)
+                ledIndex+=1
+                remainingPercentage -= percentagePerLed
             }
+
+            for (i in ledIndex until NUM_LEDS - 1) {
+                setPixelColour(i, 0)
+            }
+            render()
         }
+    }
+
+    private fun getColorForPixel(pixel: Int): Int {
+        return when {
+            blueRange.contains(pixel) -> BLUE
+            greenRange.contains(pixel) -> GREEN
+            yellowRange.contains(pixel) -> YELLOW
+            redRange.contains(pixel) -> RED
+            else -> 0
+        }
+    }
+
+    private fun map(value: Int, sourceMin: Float, sourceMax: Float, targetMin: Float, targetMax: Float): Float {
+        return (value - sourceMin) * (targetMax - targetMin) / (sourceMax - sourceMin) + targetMin
     }
 }

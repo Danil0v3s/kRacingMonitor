@@ -15,10 +15,11 @@ fun App() = MaterialTheme {
     val sessionState = GameDataRepository.session.collectAsState(null)
     val telemetryState = GameDataRepository.telemetry.collectAsState(null)
 
-    LaunchedEffect(sessionState) {
+    LaunchedEffect(sessionState.value) {
         sessionState.value?.DriverInfo?.also {
 
             LedsController.setRevOptions(
+                it.DriverCarIdleRPM,
                 it.DriverCarSLFirstRPM,
                 it.DriverCarSLShiftRPM,
                 it.DriverCarSLLastRPM,
@@ -28,8 +29,9 @@ fun App() = MaterialTheme {
     }
 
     LaunchedEffect(telemetryState.value) {
-        val rpm = telemetryState.value?.telemetry?.get("RPM")?.value?.toIntOrNull() ?: 0
-        LedsController.updateRevs(rpm)
+        telemetryState.value?.telemetry?.get("RPM")?.value?.let {
+            LedsController.updateRevs(it.toFloatOrNull()?.toInt() ?: 0)
+        }
     }
 
     if (telemetryState.value == null) {

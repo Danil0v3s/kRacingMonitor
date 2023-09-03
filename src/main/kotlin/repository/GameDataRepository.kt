@@ -12,6 +12,7 @@ import io.ktor.http.cio.websocket.readText
 import iracing.Data
 import iracing.yaml.SessionInfoData
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -37,7 +38,7 @@ object GameDataRepository {
                 break
             }
         }
-    }
+    }.distinctUntilChanged()
 
     val telemetry = flow<Data?> {
         client.webSocket(
