@@ -35,7 +35,7 @@ object GameDataRepository {
                 emit(response)
                 delay(30_000L)
             } catch (e: Exception) {
-                break
+                emit(null)
             }
         }
     }.distinctUntilChanged()
@@ -55,7 +55,7 @@ object GameDataRepository {
                     val othersMessage = incoming.receive() as? Frame.Text ?: continue
                     emit(Json.decodeFromString<Data>(othersMessage.readText()))
                 } catch (e: Exception) {
-                    break
+                    emit(null)
                 }
             }
         }

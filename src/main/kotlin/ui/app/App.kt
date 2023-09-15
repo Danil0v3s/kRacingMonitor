@@ -17,7 +17,6 @@ fun App() = MaterialTheme {
 
     LaunchedEffect(sessionState.value) {
         sessionState.value?.DriverInfo?.also {
-
             LedsController.setRevOptions(
                 it.DriverCarIdleRPM,
                 it.DriverCarSLFirstRPM,
@@ -25,7 +24,7 @@ fun App() = MaterialTheme {
                 it.DriverCarSLLastRPM,
                 it.DriverCarSLBlinkRPM
             )
-        }
+        } ?: LedsController.setIdle()
     }
 
     LaunchedEffect(telemetryState.value) {
