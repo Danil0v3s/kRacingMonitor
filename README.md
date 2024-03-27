@@ -15,7 +15,7 @@ link(shield('License Apache', 'license', 'apache', 'brightgreen'), 'https://tldr
 ### What is this?
 ![image](https://github.com/Danil0v3s/kRacingMonitor/assets/13068064/c69ede0f-e7b3-43e6-b4a7-96163d93b520)
 
-A small desktop companion application to enable you to provide MSI Afterburner data to your network
+A small desktop companion application to enable you to provide iRacing data to your network
 
 ### What does it have?
 - :white_check_mark: A simple websocket server to stream your data over your local network
@@ -25,6 +25,6 @@ A small desktop companion application to enable you to provide MSI Afterburner d
 - :soon: More robust API
 
 ### Getting started
-1. Make sure you have MSI Afterburner up and running
+1. Make sure you have iRacing up and running
 2. Download the latest release, run it and start the server
 3. Connect to the websocket using `ws://<your ip>/socket`
