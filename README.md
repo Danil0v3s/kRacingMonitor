@@ -1,5 +1,7 @@
 # <img align="left" src="_imgs/compose-logo.svg" height=100> kRacing: iRacing data over the network
 
+# I've migrated the client code from this repo to the [kRacing](https://github.com/Danil0v3s/kRacing) repo. It makes sense since both share domain models and a few dependencies. This repo is now archived.
+
 <!---freshmark shields
 output = [
 link(image('Circle CI', 'https://circleci.com/gh/diffplug/spotless/tree/main.svg?style=shield'), 'https://circleci.com/gh/diffplug/spotless/tree/main'),
